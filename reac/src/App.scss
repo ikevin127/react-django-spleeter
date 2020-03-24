@@ -1,0 +1,172 @@
+@import "./bootstrap.min.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+  background-color: #2990f0;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    height: auto;
+    width: 85%;
+    margin: 5% 0;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    border-radius: 2px;
+    border: 15px solid rgba($color: #000000, $alpha: 0);
+  }
+
+  #up-form {
+    color: white;
+    font: bold 16px sans-serif;
+    text-align: center;
+    width: 80%;
+    margin: 5% 0;
+
+    label {
+      margin: 1vh 0;
+      text-shadow: 1px 1px black;
+    }
+
+    .form-control {
+      width: 400px;
+      height: 150px;
+      margin: 0 auto;
+      resize: none;
+    }
+
+    .btn-secondary {
+      width: 250px;
+      text-shadow: 1px 1px black;
+    }
+
+    .btn-success {
+      width: 300px;
+      font-weight: bold;
+      text-shadow: 1px 1px black;
+    }
+  }
+
+  .alert-success {
+    width: 56%;
+    margin: 0 0 5% 0;
+    text-align:center;
+  }
+
+  .download-section {
+    width: 80%;
+    margin: 0 0 5% 0;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .vocals {
+      width: 250px;
+      font-weight: bold;
+      text-shadow: 1px 1px black;
+    }
+
+    .instrumental {
+      width: 250px;
+      font-weight: bold;
+      text-shadow: 1px 1px black;
+    }
+  }
+  
+  // .cards-container {
+  //   width: 80%;
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   flex-direction: row;
+  //   justify-content: center;
+  //   margin: 2.5% 0;
+
+  //   .card {
+  //     margin: 5% 5%;
+  //   }
+  // }
+
+  // span {
+  //   width: 90%;
+  //   border-top: 1px solid #000;
+  // }
+
+  // #span-bottom {
+  //   margin-top: 2.5%;
+  //   width: 90%;
+  //   border-top: 1px solid #000;
+  // }
+}
+
+@media screen and (max-width: 768px) {
+  .App {
+    #up-form {
+
+      label {
+        font-size: 14px;
+      }
+
+      .form-control {
+        width: 250px;
+        height: 100px;
+      }
+
+      .btn-secondary {
+        width: 210px;
+        font-size: 14px;
+      }
+
+      .btn-success {
+        width: 250px;
+        font-weight: bold;
+      }
+    }
+
+    .alert-success {
+      width: 250px;
+      margin: 0 0 5% 0;
+      text-align: center;
+
+      strong, label {
+        font-size: 12px;
+      }
+    }
+
+    .download-section {
+      flex-direction: column;
+
+      .vocals {
+        margin: 5% 0;
+      }
+
+      .instrumental {
+        margin: 5% 0;
+      }
+    }
+    
+    .footer {
+      width: 70%;
+      text-align: center;
+    }
+  }
+}
