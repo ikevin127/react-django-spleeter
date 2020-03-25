@@ -26,20 +26,25 @@ class SpleetView(APIView):
             print('error', spleets_serializer.errors)
             return Response(spleets_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class Vocals(generics.ListAPIView):
     def get(self, request, id, format=None):
         queryset = Spleet.objects.get(id=id)
         file_handle = queryset.media.path.rpartition('.')[0]+"/vocals.mp3"
         document = open(file_handle, 'rb')
-        response = HttpResponse(FileWrapper(document), content_type='audio/mpeg')
+        response = HttpResponse(FileWrapper(document),
+                                content_type='audio/mpeg')
         response['Content-Disposition'] = 'attachment; filename="%s"' % queryset.media.name
         return response
+
 
 class Instrumental(generics.ListAPIView):
     def get(self, request, id, format=None):
         queryset = Spleet.objects.get(id=id)
-        file_handle = queryset.media.path.rpartition('.')[0]+"/accompaniment.mp3"
+        file_handle = queryset.media.path.rpartition(
+            '.')[0]+"/accompaniment.mp3"
         document = open(file_handle, 'rb')
-        response = HttpResponse(FileWrapper(document), content_type='audio/mpeg')
+        response = HttpResponse(FileWrapper(document),
+                                content_type='audio/mpeg')
         response['Content-Disposition'] = 'attachment; filename="%s"' % queryset.media.name
         return response

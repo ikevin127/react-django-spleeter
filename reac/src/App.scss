@@ -25,6 +25,32 @@ body {
   justify-content: space-between;
   align-items: center;
 
+  .loader-bg {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba($color: #000, $alpha: 0.95);
+    text-align: center;
+
+    div {
+      align-self: center;
+    }
+
+    #loader-text {
+      margin: 40px 0 0 0;
+      align-self: center;
+      font-weight: bold;
+      font-size: 26px;
+      color: rgba($color: #fff, $alpha: 0.8);
+    }
+  }
+
   img {
     height: auto;
     width: 85%;
@@ -68,7 +94,7 @@ body {
   .alert-success {
     width: 56%;
     margin: 0 0 5% 0;
-    text-align:center;
+    text-align: center;
   }
 
   .download-section {
@@ -92,7 +118,7 @@ body {
       text-shadow: 1px 1px black;
     }
   }
-  
+
   // .cards-container {
   //   width: 80%;
   //   display: flex;
@@ -118,10 +144,35 @@ body {
   // }
 }
 
+// Not Found Page
+
+.notfound-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid black;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+  p {
+    font-size: 30px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .App {
     #up-form {
-
       label {
         font-size: 14px;
       }
@@ -147,7 +198,8 @@ body {
       margin: 0 0 5% 0;
       text-align: center;
 
-      strong, label {
+      strong,
+      label {
         font-size: 12px;
       }
     }
@@ -163,7 +215,7 @@ body {
         margin: 5% 0;
       }
     }
-    
+
     .footer {
       width: 70%;
       text-align: center;

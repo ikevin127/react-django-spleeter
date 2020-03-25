@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.20cabcd6.chunk.css",
+    "main.js": "/static/js/main.9a91ba3d.chunk.js",
+    "main.js.map": "/static/js/main.9a91ba3d.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f4807d4a.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f4807d4a.js.map",
+    "static/css/2.f87e9f44.chunk.css": "/static/css/2.f87e9f44.chunk.css",
+    "static/js/2.8a0b9174.chunk.js": "/static/js/2.8a0b9174.chunk.js",
+    "static/js/2.8a0b9174.chunk.js.map": "/static/js/2.8a0b9174.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.011dc8fc1ad5ffa4a326e8daec2635d5.js": "/precache-manifest.011dc8fc1ad5ffa4a326e8daec2635d5.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.f87e9f44.chunk.css.map": "/static/css/2.f87e9f44.chunk.css.map",
+    "static/css/main.20cabcd6.chunk.css.map": "/static/css/main.20cabcd6.chunk.css.map",
+    "static/js/2.8a0b9174.chunk.js.LICENSE.txt": "/static/js/2.8a0b9174.chunk.js.LICENSE.txt",
+    "static/media/spleeter-logo.png": "/static/media/spleeter-logo.237c9230.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f4807d4a.js",
+    "static/css/2.f87e9f44.chunk.css",
+    "static/js/2.8a0b9174.chunk.js",
+    "static/css/main.20cabcd6.chunk.css",
+    "static/js/main.9a91ba3d.chunk.js"
+  ]
+}
