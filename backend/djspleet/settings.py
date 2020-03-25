@@ -8,10 +8,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n+174wn^1_$dhl$2q7%vf@1hn%h7+lcm5*%)je$6v8d9f3kwb*'
+SECRET_KEY = process.env.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['spleeter.co.uk']
 
@@ -29,13 +29,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'spleet',
 ]
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    )
-}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
