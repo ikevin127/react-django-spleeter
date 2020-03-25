@@ -18,7 +18,7 @@ class Spleet(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     message = models.TextField(max_length=140, blank=True)
     media = models.FileField(upload_to=file_path, blank=False, validators=[
-                             FileExtensionValidator(["mp3"])])
+                             FileExtensionValidator(["mp3", "mp4", "wav", "flac"])])
 
 
 @receiver(models.signals.post_save, sender=Spleet)

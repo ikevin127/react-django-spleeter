@@ -3,8 +3,10 @@ import axios from "axios";
 import $ from "jquery";
 import jQuery from "jquery";
 import Loader from "react-loader-spinner";
+import Helmet from "react-helmet";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import spleeter from "./spleeter-logo.png";
+import icon from "./favicon.ico";
 
 export default class SpleeterPage extends React.Component {
   constructor(props) {
@@ -39,7 +41,7 @@ export default class SpleeterPage extends React.Component {
 
   axiosGet = () => {
     let self = this;
-    let url = "https://spleeter.co.uk/api/spleets/";
+    let url = "http://127.0.0.1:8000/api/spleets/";
     axios
       .get(url)
       .then(function(res) {
@@ -82,49 +84,75 @@ export default class SpleeterPage extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.axiosGet();
-    this.setState({
-      isLoading: true
-    });
-    this.startSpinner();
-    let form_data = new FormData();
-    form_data.append("message", this.state.message);
-    form_data.append("media", this.state.media, this.state.media.name);
-    let url = "https://spleeter.co.uk/api/spleets/";
-    let csrftoken = this.getCookie("csrftoken");
-    axios
-      .post(url, form_data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "X-CSRFToken": csrftoken
-        }
-      })
-      .then(res => {
-        document.getElementById("message").value = this.setState({
-          message: ""
-        });
-        document.getElementById("media").value = null;
-        this.setState({
-          isLoading: false
-        });
-        this.setState({
-          download: true
-        });
-        setTimeout(
-          function() {
-            this.axiosGet();
-            this.setState({
-              download: false
-            });
-          }.bind(this),
-          5 * 60 * 1000
-        );
-      })
-      .catch(err => console.log(err));
+    this.mediaValidation();
+    if (this.mediaValidation() === true) {
+      this.axiosGet();
+      this.setState({
+        isLoading: true
+      });
+      this.startSpinner();
+      let form_data = new FormData();
+      form_data.append("message", this.state.message);
+      form_data.append("media", this.state.media, this.state.media.name);
+      let url = "http://127.0.0.1:8000/api/spleets/";
+      let csrftoken = this.getCookie("csrftoken");
+      axios
+        .post(url, form_data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "X-CSRFToken": csrftoken
+          }
+        })
+        .then(res => {
+          document.getElementById("message").value = this.setState({
+            message: ""
+          });
+          document.getElementById("media").value = null;
+          this.setState({
+            isLoading: false
+          });
+          this.setState({
+            download: true
+          });
+          setTimeout(
+            function() {
+              this.axiosGet();
+              this.setState({
+                download: false
+              });
+            }.bind(this),
+            5 * 60 * 1000
+          );
+        })
+        .catch(err => console.log(err));
+    } else {
+      console.log("Accepted file-types: .mp3, .mp4, .wav or .flac");
+    }
   };
 
+  mediaValidation() {
+    var allowedFiles = [".mp3", ".mp4", ".wav", ".flac"];
+    var fileUpload = document.getElementById("media");
+    var validationMsg = document.getElementById("validation-message");
+    var regex = new RegExp(
+      "([a-zA-Z0-9s_\\.-:])+(" + allowedFiles.join("|") + ")$"
+    );
+    if (!regex.test(fileUpload.value.toLowerCase())) {
+      validationMsg.style.padding = "20px 10px";
+      validationMsg.style.margin = "15px auto 0 auto";
+      validationMsg.style.backgroundColor = "#be0000";
+      validationMsg.innerHTML =
+        "Your file has to end with one of the following extensions<b> <br/>" +
+        allowedFiles.join(", ") +
+        "</b>";
+      return false;
+    }
+    validationMsg.style.display = "none";
+    return true;
+  }
+
   downloadVocals(id, filename) {
-    let url = `https://spleeter.co.uk/api/download/vocals/${id}/`;
+    let url = `http://127.0.0.1:8000/api/download/vocals/${id}/`;
     fetch(url)
       .then(res => {
         res.blob().then(blob => {
@@ -139,7 +167,7 @@ export default class SpleeterPage extends React.Component {
   }
 
   downloadInstrumental(id, filename) {
-    let url = `https://spleeter.co.uk/api/download/instrumental/${id}/`;
+    let url = `http://127.0.0.1:8000/api/download/instrumental/${id}/`;
     fetch(url)
       .then(res => {
         res.blob().then(blob => {
@@ -159,10 +187,18 @@ export default class SpleeterPage extends React.Component {
     let latest = Math.max(...res);
     let curr = latest + 1;
     let csrftoken = this.getCookie("csrftoken");
-    console.log(curr);
+    //console.log(curr);
+
+    let page_title =
+      "Spleeter - Separate Vocals and Accompaniment from MP3 files using Machine Learning";
+    let favicon = icon;
 
     return (
       <>
+        <Helmet>
+          <title>{page_title}</title>
+          <link rel="icon" href={favicon} />
+        </Helmet>
         <div className="App">
           {this.state.isLoading ? (
             <>
@@ -178,6 +214,27 @@ export default class SpleeterPage extends React.Component {
             </>
           ) : null}
           <img src={spleeter} alt="Spleeter by Deezer Logo" />
+          <div className="jumbotron jumbotron-fluid">
+            <div className="container">
+              <h1 className="display-4">Aloha!</h1>
+              <p className="lead">
+                Have you ever thought about using Machine Learning technology to
+                extract vocals or instrumentals from your favourite songs ?
+                <br />
+                <br />
+                This is now a reality with{" "}
+                <a id="sbd" href="https://github.com/deezer/spleeter">
+                  Spleeter by Deezer
+                </a>
+                <br />
+                <br />
+                <span id="span">
+                  * The bigger your song file size, the longer it takes. Please
+                  be patient.
+                </span>
+              </p>
+            </div>
+          </div>
           <form id="up-form" onSubmit={this.handleSubmit}>
             <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} />
             <div className="form-group">
@@ -198,10 +255,10 @@ export default class SpleeterPage extends React.Component {
                 type="file"
                 id="media"
                 className="btn btn-secondary"
-                accept="audio/mp3, audio/mp4"
                 onChange={this.handleMediaChange}
                 required
               />
+              <div id="validation-message"></div>
             </div>
             <button type="submit" className="btn btn-success">
               Spleet it
@@ -234,34 +291,18 @@ export default class SpleeterPage extends React.Component {
               </div>
             </>
           ) : null}
-          {/* <span></span>
-              <div className="cards-container">
-                {this.state.spleets
-                  .slice(Math.max(this.state.spleets.length - 5, 0))
-                  .map(s => (
-                    <div
-                      key={s.id}
-                      className="card text-dark bg-light border-secondary mb-3"
-                      style={{ maxWidth: "20rem" }}
-                    >
-                      <div className="card-header">
-                        {s.id}# Message for developer
-                      </div>
-                      <div className="card-body">
-                        <p className="card-text">{s.message}</p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-              <span id="span-bottom"></span> */}
           <div className="pt-5 pb-5 footer">
             <div className="container">
               <div className="row">
                 <div className="col-lg-5 col-xs-12 about-company">
                   <h2>Spleeter by Deezer</h2>
                   <p className="text-white">
-                    Spleeter is the Deezer source separation library with
-                    pretrained models written in Python and uses Tensorflow.{" "}
+                    Spleeter by Deezer is the source separation library with
+                    pretrained models written in Python using{" "}
+                    <a id="tensor" href="https://www.tensorflow.org/">
+                      Tensorflow
+                    </a>{" "}
+                    to separate vocals from accompaniment from MP3 audio files.{" "}
                   </p>
                   <p>
                     <a href="https://github.com/deezer/spleeter">
@@ -312,10 +353,6 @@ export default class SpleeterPage extends React.Component {
                     </li>
                   </ul>
                   <br />
-                  <p className="text-white">
-                    <i className="fa fa-phone mr-3"></i>
-                    (+44) 741-744-2609
-                  </p>
                   <p className="text-white">
                     <i className="fas fa-envelope mr-3"></i>
                     kevin.bader96@gmail.com
