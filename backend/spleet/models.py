@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import signals
 from django.dispatch import receiver
-from spleeter.separator import Separator
+from spleet.tasks import asyncSpleet
 from django.core.validators import FileExtensionValidator
 import shutil
 import os
@@ -23,26 +23,8 @@ class Spleet(models.Model):
 
 @receiver(models.signals.post_save, sender=Spleet)
 def postSaveSpleet(sender, instance, **kwargs):
-
-    try:
-        audio_descriptors = ['media/'+str(instance.media.name)]
-        # Using embedded configuration.
-        separator = Separator('spleeter:2stems')
-        for i in audio_descriptors:
-            separator.separate_to_file(
-                i, 'media/', codec='mp3', synchronous=False)
-
-        separator.join()
-
-    except FileExistsError:
-        audio_descriptors = ['media/'+str(instance.media.name)]
-        # Using embedded configuration.
-        separator = Separator('spleeter:2stems')
-        for i in audio_descriptors:
-            separator.separate_to_file(
-                i, 'media/', codec='mp3', synchronous=False)
-
-        separator.join()
+    asyncSpleet.apply_async(args=[instance], task_id=instance.id)
+    # asyncSpleet.delay(instance)
 
 
 @receiver(models.signals.post_delete, sender=Spleet)

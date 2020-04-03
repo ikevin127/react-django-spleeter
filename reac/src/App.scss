@@ -26,11 +26,12 @@ body {
   align-items: center;
   line-height: 1.2;
 
-  #validation-message {
+  #info-message {
     width: 400px;
     border-radius: 2px;
-    text-shadow: 1px 1px black;
     font-size: 14px;
+    align-self: center;
+    line-height: 1.5;
   }
 
   #tensor {
@@ -42,7 +43,7 @@ body {
     height: auto;
     padding: 0;
     width: 70%;
-    background-color: rgba($color: #000000, $alpha: 0.2);
+    background-color: rgba($color: #000000, $alpha: 0.1);
     border-radius: 2px;
     border: 15px solid rgba($color: #000000, $alpha: 0);
 
@@ -57,11 +58,40 @@ body {
 
       #sbd {
         color: white;
+        text-decoration: underline;
       }
 
       #span {
         font-size: 12px;
       }
+    }
+  }
+
+  .error-bg {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba($color: rgb(158, 0, 0), $alpha: 0.95);
+    text-align: center;
+    line-height: 1.8;
+
+    .alert {
+      width: 70%;
+      align-self: center;
+      white-space: pre-wrap;
+    }
+
+    label {
+      line-height: 0;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 
@@ -75,29 +105,47 @@ body {
     flex-wrap: nowrap;
     flex-direction: column;
     justify-content: center;
-    background-color: rgba($color: #000, $alpha: 0.95);
+    background-color: rgba($color: #000, $alpha: 0.99);
     text-align: center;
 
     div {
       align-self: center;
     }
 
-    #loader-text {
-      margin: 40px 0 0 0;
+    .loading-bar-up {
+      border-radius: 100px;
+      height: 1.2vh;
+    }
+
+    #upload-text {
+      width: 100%;
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       align-self: center;
       font-weight: bold;
-      font-size: 26px;
+      font-size: 5vw;
+      color: rgba($color: #fff, $alpha: 0.8);
+    }
+
+    #loader-text {
+      width: 100%;
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      align-self: center;
+      font-weight: bold;
+      font-size: 5vw;
       color: rgba($color: #fff, $alpha: 0.8);
     }
   }
 
   img {
     height: auto;
-    width: 85%;
+    width: 80%;
     margin: 5% 0;
-    background-color: rgba($color: #000000, $alpha: 0.2);
-    border-radius: 2px;
-    border: 15px solid rgba($color: #000000, $alpha: 0);
   }
 
   #up-form {
@@ -106,10 +154,37 @@ body {
     text-align: center;
     width: 80%;
     margin: 5% 0;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
 
     label {
       margin: 1vh 0;
       text-shadow: 1px 1px black;
+    }
+
+    .form-group {
+      margin: 0;
+    }
+
+    .info-button {
+      width: 100%;
+      margin: 10px 0;
+
+      button {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        outline: inherit;
+
+        .fa-info-circle {
+          font-size: 34px;
+          cursor: pointer;
+        }
+      }
     }
 
     .form-control {
@@ -135,6 +210,7 @@ body {
     width: 56%;
     margin: 0 0 5% 0;
     text-align: center;
+    line-height: 1.5;
   }
 
   .download-section {
@@ -209,8 +285,9 @@ body {
       }
     }
 
-    #validation-message {
+    #info-message {
       width: 250px;
+      font-size: 11px;
     }
 
     #up-form {

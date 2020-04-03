@@ -1,5 +1,5 @@
-from .serializers import SpleetSerializer
 from .models import Spleet
+from django_celery_results.models import TaskResult
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -7,6 +7,10 @@ from rest_framework import status
 from rest_framework import generics
 from django.http import HttpResponse
 from wsgiref.util import FileWrapper
+from django.dispatch import receiver
+from django.db.models import signals
+from django.db import models
+from .serializers import SpleetSerializer, CelerySerializer
 
 
 class SpleetView(APIView):
@@ -25,6 +29,15 @@ class SpleetView(APIView):
         else:
             print('error', spleets_serializer.errors)
             return Response(spleets_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CeleryResult(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        tasks = TaskResult.objects.all()
+        serializer = CelerySerializer(tasks, many=True)
+        return Response(serializer.data)
 
 
 class Vocals(generics.ListAPIView):
